@@ -5,9 +5,10 @@ using System.Text;
 
 namespace tscscan_edit
 {
-    class tscscnFile{
+    public class tscscanfile{
 
-        public int parseFile(string sFile, ref List<tscscanmap.tscscanmapping> myList, ref List<tscscanmap.comment> myComments)
+        public List<tscscan> tscscanList = new List<tscscan>();
+        public tscscanfile(string sFile)
         {
             int iRet = 0;
             try
@@ -21,7 +22,7 @@ namespace tscscan_edit
                     //first test for comment line
                     if (sLine.StartsWith("//"))
                     {
-                        myComments.Add(new tscscanmap.comment(iLine, sLine));
+                        tscscanList.Add(new tscscan((byte)vkIdx, sLine));
                         iLine++;
                         continue;
                     }
@@ -29,13 +30,14 @@ namespace tscscan_edit
                     // 0x2a 0x00  // 0x10 - VK_SHIFT (LEFT SHIFT)
                     //vkIdx is VKEY, first is scancode, second is char and rest is comment
                     string sC = "";
-                    if (s.Length > 2)
-                    {
-                        for (int i = 2; i < s.Length; i++)
-                            sC += s[i] + " ";
+                    int p=sLine.IndexOf("//");
+                    if(p > 0){
+                        sC = sLine.Substring(p);
                     }
-                    tscscanmap.tscscanmapping map = new tscscanmap.tscscanmapping((byte)vkIdx, Convert.ToByte(s[0], 16), Convert.ToByte(s[1], 16), sC);
-                    myList.Add(map);
+                    if (sC.Length>0)
+                        tscscanList.Add( new tscscan((byte)vkIdx, Convert.ToByte(s[0], 16), Convert.ToByte(s[1], 16), sC));
+                    else
+                        tscscanList.Add(new tscscan((byte)vkIdx, Convert.ToByte(s[0], 16), Convert.ToByte(s[1], 16)));
                     vkIdx++;
                 }
             }
@@ -43,7 +45,6 @@ namespace tscscan_edit
             {
                 System.Diagnostics.Debug.WriteLine("Exception: " + ex.Message);
             }
-            return iRet;
         }
 
     }

@@ -3,6 +3,8 @@ Microsoft Visual Studio Solution File, Format Version 10.00
 # Visual Studio 2008
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "tscscan-edit", "tscscan-edit\tscscan-edit.csproj", "{49775915-D430-4132-9A8A-91C4BEF63C9F}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "tscscanEditPC", "tscscanEditPC\tscscanEditPC.csproj", "{DFF38A48-4D17-48A8-A048-EC60C2101E92}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -10,11 +12,13 @@ Global
 	EndGlobalSection
 	GlobalSection(ProjectConfigurationPlatforms) = postSolution
 		{49775915-D430-4132-9A8A-91C4BEF63C9F}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{49775915-D430-4132-9A8A-91C4BEF63C9F}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{49775915-D430-4132-9A8A-91C4BEF63C9F}.Debug|Any CPU.Deploy.0 = Debug|Any CPU
 		{49775915-D430-4132-9A8A-91C4BEF63C9F}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{49775915-D430-4132-9A8A-91C4BEF63C9F}.Release|Any CPU.Build.0 = Release|Any CPU
 		{49775915-D430-4132-9A8A-91C4BEF63C9F}.Release|Any CPU.Deploy.0 = Release|Any CPU
+		{DFF38A48-4D17-48A8-A048-EC60C2101E92}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{DFF38A48-4D17-48A8-A048-EC60C2101E92}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{DFF38A48-4D17-48A8-A048-EC60C2101E92}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{DFF38A48-4D17-48A8-A048-EC60C2101E92}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

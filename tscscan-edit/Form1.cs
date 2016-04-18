@@ -11,14 +11,14 @@ namespace tscscan_edit
 {
     public partial class Form1 : Form
     {
-        List<tscscanmapping> _mapping = new List<tscscanmapping>();
+        List<tscscanmap.tscscanmapping> _mapping = new List<tscscanmap.tscscanmapping>();
         
         tscscnFile _tscscnFile = new tscscnFile();
-        List<comment> _comments = new List<comment>();
+        List<tscscanmap.comment> _comments = new List<tscscanmap.comment>();
 
         string _filename = "\\windows\\tscscan.txt";
 
-        charvalues _charvalues = new charvalues();
+        myChars.charvalues _myChars = new myChars.charvalues();
 
         public Form1()
         {
@@ -30,7 +30,7 @@ namespace tscscan_edit
         {
             foreach (scancode S in scancode.scancodes)
                 listBox2.Items.Add(S);
-            listBox3.DataSource = _charvalues.charlist;
+            listBox3.DataSource = _myChars.charlist;
         }
 
         void loadData(string sFile)
@@ -43,17 +43,17 @@ namespace tscscan_edit
             //sort lists
             _mapping.Sort(sortByVKey);
             int iLine = 0;
-            List<comment> commentsforline;
+            List<tscscanmap.comment> commentsforline;
 
             List<string> writeList=new List<string>();
 
             while (iLine < 256)
             {
-                commentsforline=getCommentLines(iLine);
+                commentsforline = getCommentLines(iLine);
                 if (commentsforline.Count > 0)
-                    foreach (comment C in commentsforline)
+                    foreach (tscscanmap.comment C in commentsforline)
                         writeList.Add(C._comment);
-                tscscanmapping M = getMapping(iLine);
+                tscscanmap.tscscanmapping M = getMapping(iLine);
                 if (M != null)
                     writeList.Add(M.getLine());
                 else
@@ -78,22 +78,23 @@ namespace tscscan_edit
             return;
         }
 
-        tscscanmapping getMapping(int iKey)
+        tscscanmap.tscscanmapping getMapping(int iKey)
         {
-            foreach (tscscanmapping M in _mapping)
+            foreach (tscscanmap.tscscanmapping M in _mapping)
                 if (M._vkey == iKey)
                     return M;
             return null;
         }
-        List<comment> getCommentLines(int iLine)
+        List<tscscanmap.comment> getCommentLines(int iLine)
         {
-            List<comment> comments_for_line=new List<comment>();
-            foreach (comment C in _comments)
+            List<tscscanmap.comment> comments_for_line = new List<tscscanmap.comment>();
+            foreach (tscscanmap.comment C in _comments)
                 if(C._lineNumber==iLine)
                     comments_for_line.Add(C);
             return comments_for_line;
         }
-        static int sortByVKey(tscscanmapping map1, tscscanmapping map2){
+        static int sortByVKey(tscscanmap.tscscanmapping map1, tscscanmap.tscscanmapping map2)
+        {
             if (map1 == null)
             {
                 if (map2 == null)
@@ -111,7 +112,7 @@ namespace tscscan_edit
                 }
             }
         }
-        static int sortByVKey(comment comm1, comment comm2)
+        static int sortByVKey(tscscanmap.comment comm1, tscscanmap.comment comm2)
         {
             if (comm1 == null)
             {
@@ -159,7 +160,7 @@ namespace tscscan_edit
         {
             if (listBox1.SelectedIndex == -1)
                 return;
-            tscscanmapping M = (tscscanmapping)listBox1.SelectedItem;
+            tscscanmap.tscscanmapping M = (tscscanmap.tscscanmapping)listBox1.SelectedItem;
             //find scancode in listbox2
             for (int i = 0; i < listBox2.Items.Count; i++)
                 if (((scancode)listBox2.Items[i])._scancode == M._scancode)
@@ -179,16 +180,16 @@ namespace tscscan_edit
             if (listBox2.SelectedIndex == -1)
                 return;
             scancode S = (scancode)listBox2.SelectedItem;
-            tscscanmapping M = (tscscanmapping)listBox1.SelectedItem;
+            tscscanmap.tscscanmapping M = (tscscanmap.tscscanmapping)listBox1.SelectedItem;
             
             int oldScancode = M._scancode;
             M._scancode = S._scancode;
             
             int oldChar = M._char;
-            M._char = ((charvalue)listBox3.SelectedItem).bValue;
+            M._char = ((myChars.charvalue)listBox3.SelectedItem).bValue;
             //TODO: retrieve new char for scancode
 
-            M._comment = "// "+ ((scancode.VKEY)M._vkey).ToString() +" mapped from 0x" + oldScancode.ToString("x3") + " to 0x" + M._scancode.ToString("x4");
+            M._comment = "// "+ ((vkeys.VKEY)M._vkey).ToString() +" mapped from 0x" + oldScancode.ToString("x3") + " to 0x" + M._scancode.ToString("x4");
             M._comment += " char (old): 0x" + oldChar.ToString("x2") + " (new):0x" + M._char.ToString("x2");
             listBox1.SelectedItem = M;
         }
